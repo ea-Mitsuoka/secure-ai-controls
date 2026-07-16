@@ -1,20 +1,21 @@
-# CODEOWNERS — review routing. Later rules win. TEMPLATE: replace placeholders with
-# real teams/users when instantiating (format: @org/team-name or @username).
+# CODEOWNERS — review routing. Later rules win.
+# Single-maintainer repo: all paths route to @ea-Mitsuoka. Split into teams if the
+# project gains maintainers (rule-governing paths should get the strictest review).
 
 # Default: everything needs a maintainer review
-*                       @{{ORG}}/maintainers
+*                       @ea-Mitsuoka
 
-# Rule changes govern all agents — require lead review (highest scrutiny)
-/.ai/                   @{{ORG}}/leads
-/CLAUDE.md              @{{ORG}}/leads
-/AGENTS.md              @{{ORG}}/leads
-/.skills/               @{{ORG}}/leads
-/.claude/               @{{ORG}}/leads
+# Rule changes govern all agents — highest scrutiny
+/.ai/                   @ea-Mitsuoka
+/CLAUDE.md              @ea-Mitsuoka
+/AGENTS.md              @ea-Mitsuoka
+/.skills/               @ea-Mitsuoka
+/.claude/               @ea-Mitsuoka
 
 # Security-sensitive surfaces
-/SECURITY.md            @{{ORG}}/security
-/.github/workflows/     @{{ORG}}/security @{{ORG}}/leads
-/.pre-commit-config.yaml @{{ORG}}/security
+/SECURITY.md            @ea-Mitsuoka
+/.github/workflows/     @ea-Mitsuoka
+/.pre-commit-config.yaml @ea-Mitsuoka
 
 # Decisions
-/docs/adr/              @{{ORG}}/leads
+/docs/adr/              @ea-Mitsuoka
