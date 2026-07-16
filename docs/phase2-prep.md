@@ -12,7 +12,7 @@ updated: 2026-07-16
 工数目安は §8 の **5〜8人日**。10月の期中評価で示す中間成果は「検証環境で立つ統制インフラの
 骨格＋機密データ検知の初動」。
 
-## 1. 着手時の実機確認（②の最初に実施）
+## 1. 着手時の実機確認 — 2026-07-16 前倒しで4件すべて実施済み
 
 | #   | 確認事項                                                             | 方法                                                                                  | 影響先                                                       |
 | --- | -------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | ------------------------------------------------------------ |
@@ -20,6 +20,24 @@ updated: 2026-07-16
 | 2   | `vertexai.allowedModels` の許可モデルリスト                          | その時点の最新安定版 Gemini モデルIDを Model Garden で確認                            | 決定 #11・FR-7 パラメータ                                    |
 | 3   | provider issue #24092（publisher モデルの request-response logging） | GitHub issue / provider CHANGELOG                                                     | 決定 #9（解消済みなら `gcloud` 補完を Terraform 管理に移す） |
 | 4   | Model Armor の GCP機能・Terraform リソースの再確認                   | requirements.md §3.5 の情報源を再訪                                                   | §3 全体（AI安全系は更新が速い）                              |
+
+**結果（2026-07-16 実施）**:
+
+1. `modelarmor.googleapis.com` は **VPC-SC 対応 GA・restricted VIP 利用可**（gcloud で実機確認）
+   → 決定 #12 の条件成立、境界に含める。`logging`／`monitoring` も GA を実機で再確認済み —
+   **境界サービス集合（aiplatform・dlp・bigquery・logging・monitoring・modelarmor）は全件確定**。
+2. Model Garden の Gemini 安定版（preview を除くテキスト生成）: `gemini-3.5-flash`／
+   `gemini-2.5-pro`／`gemini-2.5-flash`／`gemini-2.5-flash-lite`／`gemini-3.1-flash-lite`。
+   3.x 系 Pro は preview のみ。**`vertexai.allowedModels` の初期値候補**:
+   `publishers/google/models/gemini-3.5-flash:predict` と
+   `publishers/google/models/gemini-2.5-pro:predict`（FR-7 の tfvars に採用。IaC 実装時に再取得して確定）。
+3. issue #24092 は **open**（最終更新 2025-12-08、label: new-resource/forward-review）
+   → 決定 #9 の `gcloud`/`null_resource` 補完を維持。IaC 実装時に再確認。
+4. Model Armor の機能・Terraform リソースは同日（2026-07-16）に §3.5 の情報源で確認済み。
+
+実行時の注記: 確認に使ったクォータプロジェクト `ea-yukihidemitsuoka2` で
+`accesscontextmanager.googleapis.com` と `aiplatform.googleapis.com` を有効化した
+（describe/list 実行のためで、リソースは作成していない）。
 
 ## 2. リポジトリのインスタンス化（決定 #10）— 2026-07-16 前倒しで実施済み
 
