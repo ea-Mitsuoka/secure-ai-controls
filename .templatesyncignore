@@ -12,4 +12,5 @@ Makefile
 .ai/decision-log.md
 .github/CODEOWNERS
 .github/governance/repository.json
+.github/dependabot.yml
 .templatesyncignore

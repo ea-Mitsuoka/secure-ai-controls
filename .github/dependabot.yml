@@ -8,19 +8,21 @@
 # Dependabot SECURITY updates/alerts do NOT need this file — they are a repository
 # setting enabled by scripts/setup-github.sh (vulnerability-alerts + automated-security-fixes).
 #
-# If you prefer Dependabot OVER Renovate: delete renovate.json, then uncomment the
-# ecosystem block(s) below. GitHub may show a "no update configuration" notice while every
-# block is commented; that is expected for this inert-by-default template file.
+# If you prefer Dependabot OVER Renovate: delete renovate.json, then set
+# open-pull-requests-limit above 0 (or add ecosystem blocks like the npm example below).
+#
+# The single entry below exists only because the Dependabot schema requires
+# `updates` to contain at least one item (`updates: []` fails config validation
+# on every PR). `open-pull-requests-limit: 0` keeps it inert: Dependabot opens
+# no version-update PRs.
 
 version: 2
-updates: []
-  # - package-ecosystem: "github-actions"   # only if NOT using Renovate
-  #   directory: "/"
-  #   schedule:
-  #     interval: "weekly"
-  #   labels: ["type:dependencies", "type:ci"]
-  #   commit-message:
-  #     prefix: "build"
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    open-pull-requests-limit: 0
   #
   # - package-ecosystem: "npm"          # or pip / gomod / cargo / maven / bundler
   #   directory: "/"
