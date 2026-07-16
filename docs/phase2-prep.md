@@ -21,15 +21,16 @@ updated: 2026-07-16
 | 3 | provider issue #24092（publisher モデルの request-response logging） | GitHub issue / provider CHANGELOG | 決定 #9（解消済みなら `gcloud` 補完を Terraform 管理に移す） |
 | 4 | Model Armor の GCP機能・Terraform リソースの再確認 | requirements.md §3.5 の情報源を再訪 | §3 全体（AI安全系は更新が速い） |
 
-## 2. リポジトリ化（決定 #10）
+## 2. リポジトリのインスタンス化（決定 #10）
 
-1. ai-dev-foundation テンプレートから本ワークスペースを scaffold する。
-2. プレースホルダ置換（`{{PROJECT_NAME}}`＝secure-ai-controls、mission.md に本書と
+ai-dev-foundation テンプレートは適用済み（Initial commit）。②では未インスタンス化の部分を埋める:
+
+1. プレースホルダ置換（`{{PROJECT_NAME}}`＝secure-ai-controls、mission.md に本書と
    requirements.md の内容を反映、CODEOWNERS）。
-3. Makefile は Terraform 系 profile を基に `setup/format/lint/test/build` を実装
+2. Makefile は Terraform 系 profile を基に `setup/format/lint/test/build` を実装
    （`terraform fmt / validate / plan` を割り当て）。
-4. `make setup && pre-commit install --hook-type pre-commit --hook-type pre-push`。
-5. GitHub governance の `plan` を実行し設定ドリフトを確認。
+3. `make setup && pre-commit install --hook-type pre-commit --hook-type pre-push`。
+4. GitHub governance の `plan` を実行し設定ドリフトを確認。
 
 ## 3. 構築の実施順（依存とロックアウト回避を考慮）
 
