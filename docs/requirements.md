@@ -171,7 +171,7 @@ Vertex request-response logging（BigQuery へ保存）と Cloud Audit Logs（Da
 - **コスト規律**: request-response logging はサンプリング率で制御し、監査ログの Data Access は必要な範囲に限定する（過剰な有効化を避ける）。
 
 ## 6. アーキテクチャと既存資産の統合
-- **基盤**: `gcp-foundations`（別オーナー ea-Mitsuoka）が、組織階層・Shared VPC・**VPC-SC・組織ポリシー・IAM・ログ/アラートの生成**を実装済み。ただし **AI固有の統制（Model Armor/Sensitive Data Protection/Vertex）は未実装**。本目標は、この基盤に AI固有の統制を追加する形をとる。基盤側は重くしない（使う側だけがタグ参照で取り込む）。
+- **基盤**: `gcp-foundations`（ea-Mitsuoka＝本リポジトリと同アカウント。2026-07-16 に本リポジトリを ea-Mitsuoka へ移設）が、組織階層・Shared VPC・**VPC-SC・組織ポリシー・IAM・ログ/アラートの生成**を実装済み。ただし **AI固有の統制（Model Armor/Sensitive Data Protection/Vertex）は未実装**。本目標は、この基盤に AI固有の統制を追加する形をとる。基盤側は重くしない（使う側だけがタグ参照で取り込む）。
 - **モジュール**: 統制モジュールは `terraform-gcp-modules`（Yukihide-Mitsuoka）に **4モジュール**を追加する（2026-07-16決定・決定記録 #13。FR-4 の統制領域と1対1）: `model-armor-guard`（テンプレート＋floor setting）／`vertex-audit-pipeline`（Data Access 監査設定＋sink＋log-based metric＋アラート）／`vpc-sc-perimeter`（access policy・perimeter・access level）／`ai-org-policies`（決定記録 #11 の constraint subset）。既存規約（1モジュール1ディレクトリで `main/variables/outputs/versions/README`・provider宣言なし・入力にvalidation・SemVerタグ固定参照）に従う。なお terraform-gcp-modules の現収載は `network`/`github-oidc` のみで `log-router-sink` は存在しない（2026-07-16確認）— sink は目標1の設計を参照し `vertex-audit-pipeline` に内包する。request-response logging の `gcloud` 補完（決定記録 #9）はモジュール化せず、本ワークスペース側の手順・スクリプトとして持つ。
 - **apply/CI**: `gcp-cicd-workflows` の `tf-plan`/`tf-apply`（キーレスのWIF/OIDC認証）で構築を回す。
 - **規約**: `ai-dev-foundation` のセキュリティ規約（最小権限・セキュリティ後退禁止 等。規約コード SEC-011/SEC-021/GR-030）を継承し、決定は ADR/decision-log に記録する。

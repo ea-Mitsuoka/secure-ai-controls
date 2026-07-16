@@ -21,6 +21,7 @@
 
 ## 関連リポ
 
-- `gcp-foundations`（別オーナー ea-Mitsuoka）: 組織階層・Shared VPC・**VPC-SC・組織ポリシー・IAM・ログ/アラートの生成**を実装済み。AI固有の統制（Vertex/Model Armor/Sensitive Data Protection）は未実装。本目標の基盤の候補。
-- `terraform-gcp-modules`（Yukihide-Mitsuoka）: 統制モジュールの追加先候補（model-armor / sensitive-data-protection / vpc-sc-perimeter 等）。
+- 本リポジトリは 2026-07-16 に `Yukihide-Mitsuoka/secure-ai-controls`（public）から `ea-Mitsuoka/secure-ai-controls`（private）へ移設（履歴保持）。
+- `gcp-foundations`（ea-Mitsuoka＝本リポジトリと同アカウント）: 組織階層・Shared VPC・**VPC-SC・組織ポリシー・IAM・ログ/アラートの生成**を実装済み。AI固有の統制（Vertex/Model Armor/Sensitive Data Protection）は未実装。本目標の基盤の候補。
+- `terraform-gcp-modules`（Yukihide-Mitsuoka・public）: 統制モジュールの追加先（決定記録 #13 の4モジュール）。public のためアカウントをまたいでもタグ固定の git source で参照可能。
 - `secure-ga4-bq-template`: 目標1（別担当・本ディレクトリからは触れない）。設計方針（決定論的な統制＋最小権限＋モジュール化＋検証環境での実証）を採用する。
