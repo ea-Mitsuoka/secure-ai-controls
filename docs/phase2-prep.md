@@ -30,10 +30,11 @@ ai-dev-foundation テンプレートは適用済み（Initial commit）。イン
 2. **完了（2026-07-16）**: Makefile を profiles/terraform-gcp を基に実装。`terraform/` が
    無い間は各ターゲットが通知を出して green になる（②で IaC を置くと実体が動く）。
 3. **完了（2026-07-16）**: `make setup`（pre-commit フックの導入）。
-4. **保留**: GitHub governance の branch-protection 確認・適用は、private 個人リポでは
-   ブランチ保護 API が GitHub Pro を要求するため実行不可（2026-07-16 確認、403）。
-   選択肢: Pro にする／組織リポに移す／保護なしで運用（フック＋PR 規律で代替）。
-   merge 方式の設定（squash のみ許可）は API で可能 — 人間の承認を得て設定する。
+4. **決定（2026-07-16・ユーザー承認）**: ブランチ保護は**保護なしで運用**する —
+   private 個人リポではブランチ保護 API が GitHub Pro を要求するため（403確認）。
+   GR-010 フックと PR 規律で代替し、本番化・外販の段階で再検討する。
+   merge 方式は **squash のみ**に設定済み（`squash_merge_commit_title=PR_TITLE` —
+   Conventional Commits による SemVer 自動化が機能する）。
 
 ## 3. 構築の実施順（依存とロックアウト回避を考慮）
 
