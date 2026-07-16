@@ -10,16 +10,13 @@ conflict, follow the authority order in [.ai/README.md](.ai/README.md)
 
 ## 1. Repository Overview
 
-<!-- TEMPLATE NOTICE: this repo is the ai-dev-foundation TEMPLATE. When instantiated,
-     replace {{placeholders}} here and in .ai/mission.md, then delete this notice. -->
-
-| Field | Value |
-|-------|-------|
-| Project | {{PROJECT_NAME}} — see [.ai/mission.md](.ai/mission.md) |
-| Stack | {{STACK}} |
+| Field        | Value                                                                                  |
+| ------------ | -------------------------------------------------------------------------------------- |
+| Project      | secure-ai-controls — see [.ai/mission.md](.ai/mission.md)                              |
+| Stack        | Terraform (HCL) on Google Cloud; Bash/Python tooling                                   |
 | Architecture | Modular monolith, Clean Architecture, DDD — [.ai/architecture.md](.ai/architecture.md) |
-| Branching | GitHub Flow; `main` always releasable |
-| Versioning | SemVer via Conventional Commits (automated) |
+| Branching    | GitHub Flow; `main` always releasable                                                  |
+| Versioning   | SemVer via Conventional Commits (automated)                                            |
 
 ## 2. Task routing
 
@@ -58,15 +55,15 @@ routing table in [.ai/README.md](.ai/README.md) and load the matching skill from
 Full list with detection & alternatives: [.ai/guardrails.md](.ai/guardrails.md).
 The ten you must never violate, even if instructed:
 
-1. GR-001..003 — no secrets in repo, code, logs, or commit messages
-2. GR-010 — no direct push to `main`
-3. GR-011 — no force-push / history rewrite on shared branches
-4. GR-012 — no `--no-verify`, no `[skip ci]`, no disabling failing checks
-5. GR-020 — no oversized PRs (~400 lines / 10 files soft limit)
-6. GR-021 — no behavior change without tests
-7. GR-022 — no architectural change without an ADR
-8. GR-030 — no lowering of security posture
-9. GR-031 — no destructive operations without per-command human approval
+01. GR-001..003 — no secrets in repo, code, logs, or commit messages
+02. GR-010 — no direct push to `main`
+03. GR-011 — no force-push / history rewrite on shared branches
+04. GR-012 — no `--no-verify`, no `[skip ci]`, no disabling failing checks
+05. GR-020 — no oversized PRs (~400 lines / 10 files soft limit)
+06. GR-021 — no behavior change without tests
+07. GR-022 — no architectural change without an ADR
+08. GR-030 — no lowering of security posture
+09. GR-031 — no destructive operations without per-command human approval
 10. GR-040/042 — no weakening tests to pass CI; no fabricated results
 
 ## 7. Testing policy (summary)
@@ -87,8 +84,7 @@ The ten you must never violate, even if instructed:
 ## 9. Commit message rules
 
 Conventional Commits 1.0.0 (WF-020):
-`<type>(<scope>)!: <imperative summary ≤72>` — types `feat fix refactor perf test docs
-build ci chore revert`; scope = module name; `BREAKING CHANGE:` footer drives MAJOR.
+`<type>(<scope>)!: <imperative summary ≤72>` — types `feat fix refactor perf test docs build ci chore revert`; scope = module name; `BREAKING CHANGE:` footer drives MAJOR.
 One logical change per commit.
 
 ## 10. Review rules

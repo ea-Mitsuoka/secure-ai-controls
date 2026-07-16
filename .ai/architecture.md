@@ -11,14 +11,12 @@ Style: **modular monolith, Clean Architecture layers inside each module, boundar
 Domain-Driven Design bounded contexts.** Start as a monolith; extract services only when
 an ADR justifies it.
 
-<!-- TEMPLATE: adjust the stack table when instantiating. The layer rules below are stack-agnostic. -->
-
-| Field | Value |
-|-------|-------|
-| Language / runtime | {{STACK}} |
-| Persistence | {{DATABASE}} |
-| Deployment target | {{DEPLOY_TARGET}} |
-| Architecture docs | `docs/architecture/` |
+| Field              | Value                                                                                                                                                  |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Language / runtime | Terraform (HCL); Bash/Python tooling                                                                                                                   |
+| Persistence        | None (Terraform state in a GCS backend; audit logs land in BigQuery as workload data)                                                                  |
+| Deployment target  | Google Cloud verification environment — 2 projects: workload (Vertex AI / Model Armor / SDP) + log aggregation & monitoring (requirements decision #8) |
+| Architecture docs  | `docs/architecture/`                                                                                                                                   |
 
 ## ARC-001: Canonical directory layout
 
@@ -90,11 +88,11 @@ Design modules **deep** (Ousterhout): a lot of behavior behind a small interface
 
 Before modifying code, classify the blast radius and act accordingly:
 
-| Scope | Definition | Required action |
-|-------|------------|-----------------|
-| Local | inside one module, contract unchanged | proceed |
-| Contract | changes a MODULE.md public API or event | update MODULE.md + all consumers in same PR, note in PR |
-| Architectural | layers, boundaries, storage, public API shape | ADR first (GR-022) |
+| Scope         | Definition                                    | Required action                                         |
+| ------------- | --------------------------------------------- | ------------------------------------------------------- |
+| Local         | inside one module, contract unchanged         | proceed                                                 |
+| Contract      | changes a MODULE.md public API or event       | update MODULE.md + all consumers in same PR, note in PR |
+| Architectural | layers, boundaries, storage, public API shape | ADR first (GR-022)                                      |
 
 To find consumers of a contract: search for the module's public symbols across
 `src/modules/*/`; check `docs/architecture/` for documented flows.
