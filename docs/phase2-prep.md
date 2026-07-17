@@ -45,14 +45,31 @@ ai-dev-foundation テンプレートは適用済み（Initial commit）。イン
 
 1. **完了（2026-07-16）**: プレースホルダ置換（mission.md・CLAUDE.md §1・architecture.md
    スタック表・README・CODEOWNERS・issue config）。
-2. **完了（2026-07-16）**: Makefile を profiles/terraform-gcp を基に実装。`terraform/` が
-   無い間は各ターゲットが通知を出して green になる（②で IaC を置くと実体が動く）。
+2. **完了（2026-07-16）**: Makefile を profiles/terraform-gcp を基に実装（暫定）。`terraform/`
+   が無い間は各ターゲットが通知を出して green になる。**②で terraform-gcp-template から
+   継承する `infra/envs` 前提の Makefile に置き換える**（下記 6）。
 3. **完了（2026-07-16）**: `make setup`（pre-commit フックの導入）。
 4. **決定（2026-07-16・ユーザー承認）**: ブランチ保護は**保護なしで運用**する —
    private 個人リポではブランチ保護 API が GitHub Pro を要求するため（403確認）。
    GR-010 フックと PR 規律で代替し、本番化・外販の段階で再検討する。
    merge 方式は **squash のみ**に設定済み（`squash_merge_commit_title=PR_TITLE` —
    Conventional Commits による SemVer 自動化が機能する）。
+5. **決定（2026-07-16・ADR-0005）**: テンプレート親を **terraform-gcp-template** に変更
+   （多段継承）。`.github/inheritance/manifest.json` + `lock.json` で宣言・検証済み。
+   materialization（実ファイル反映）はコミットベース継承ツールの follow-up 待ち。
+
+### 2.1 ②で materialize する terraform レイヤ（親から継承）
+
+コミットベース継承の materialization が使えるようになったら（または Phase② が先に始まる場合は
+1回だけ手動コピーで）、親 terraform-gcp-template から次を取り込む。取り込み後は
+`python3 scripts/template_inheritance.py plan` の差分をレビューしてから反映する。
+
+- `infra/envs/<env>/`（Terraform ルート構成の雛形）— 暫定 Makefile を置き換える前提
+- 親の Terraform 配線 Makefile（`infra/` 前提・`plan ENV=<env>`）
+- `.github/governance/profiles/terraform-gcp.json`（`iac-scan` を必須チェック化）
+- `tests/governance/` `tests/workflows/`（プロファイル/ワークフロー契約テスト）
+- **要調整**: 親の `iac.yml` はジョブ名が `iac-scan`、現行 `iac.yml` は `scan`。プロファイルの
+  required check 名と一致させる（materialize 時に親側が最新化されていれば自動解消）。
 
 ## 3. 構築の実施順（依存とロックアウト回避を考慮）
 

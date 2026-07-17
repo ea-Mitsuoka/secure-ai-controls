@@ -3,7 +3,7 @@
 社内Gemini/Vertex 利用を統制下に置くGCP環境の**統制インフラ IaC ＋ 監査ログ監視基盤**を、検証環境（クライアントゼロ＝実顧客を持たない自社検証環境）で構築・実証するための、個人目標3の作業用ディレクトリ。
 
 - 対象期間: 2026-04 〜 2027-03 / Phase① 要件整理・方式比較 = 7〜8月（着手時期）
-- 現状: **ai-dev-foundation テンプレート適用済み・インスタンス化済み**（2026-07-16 前倒し実施: プレースホルダ置換・Terraform 用 Makefile・CODEOWNERS）。IaC コードはまだ無い（②で作成）。
+- 現状: **テンプレート適用済み・インスタンス化済み**（2026-07-16 前倒し）。**テンプレート親を terraform-gcp-template に変更**（ADR-0005・多段継承 `ai-dev-foundation → terraform-gcp-template → 本リポ`。`.github/inheritance/manifest.json` で宣言、materialization はツール完成待ち）。IaC コードはまだ無い（②で作成）。
 
 ## 中身
 
