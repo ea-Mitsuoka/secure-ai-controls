@@ -42,6 +42,7 @@
     ".github/workflows/security.yml",
     "AGENTS.md",
     "CONTRIBUTING.md",
+    "docs/foundation/",
     "LICENSE",
     "Makefile",
     "SECURITY.md",
@@ -67,7 +68,12 @@
     ".templatesyncignore",
     "CLAUDE.md",
     "README.md",
-    "docs/",
+    "docs/README.md",
+    "docs/adr/",
+    "docs/glossary.md",
+    "docs/phase2-prep.md",
+    "docs/requirements.md",
+    "docs/requirements/",
     "secure-ai-controls.md"
   ]
 }
