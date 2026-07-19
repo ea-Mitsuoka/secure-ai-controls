@@ -1,6 +1,7 @@
 # Files the template-sync workflow must NEVER overwrite in downstream repos —
 # everything a project customizes. Rules/workflows/skills DO sync (that's the point).
 src/**
+tests/inheritance/**
 CLAUDE.md
 README.md
 .env.example

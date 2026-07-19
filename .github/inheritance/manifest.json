@@ -74,6 +74,7 @@
     "docs/phase2-prep.md",
     "docs/requirements.md",
     "docs/requirements/",
-    "secure-ai-controls.md"
+    "secure-ai-controls.md",
+    "tests/inheritance/"
   ]
 }

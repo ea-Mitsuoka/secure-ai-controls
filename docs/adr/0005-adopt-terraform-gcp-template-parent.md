@@ -6,7 +6,7 @@
 | Date                       | 2026-07-16                                                                                                                                         |
 | Deciders                   | repository owner                                                                                                                                   |
 | Author                     | Claude (AI agent)                                                                                                                                  |
-| Supersedes / Superseded by | Changes the parentage assumed at instantiation (direct ai-dev-foundation); governed by [ADR-0004](0004-harden-multi-level-template-inheritance.md) |
+| Supersedes / Superseded by | Changes the parentage assumed at instantiation (direct ai-dev-foundation); governed by [ADR-0004](../foundation/adr/0004-harden-multi-level-template-inheritance.md) |
 
 ## Context
 
@@ -24,7 +24,7 @@ needs Terraform-specific scaffolding that `ai-dev-foundation` does not carry:
 `terraform-gcp-template` (public, `is_template`) already inherits from `ai-dev-foundation`
 and adds exactly this layer: `infra/`, `.github/workflows/iac.yml` + a `terraform-gcp`
 governance profile requiring `iac-scan`, a Terraform-wired Makefile, and governance /
-workflow contract tests. [ADR-0004](0004-harden-multi-level-template-inheritance.md)
+workflow contract tests. [ADR-0004](../foundation/adr/0004-harden-multi-level-template-inheritance.md)
 established a hardened, manifest-owned, direct-parent, multi-level inheritance contract and
 explicitly anticipates the chain `ai-dev-foundation -> terraform-gcp-template -> child`.
 
@@ -73,7 +73,7 @@ Point this repo's ADR-0004 inheritance manifest at `terraform-gcp-template`.
 
 Choose Option 3. This repository's direct template parent MUST be
 `Yukihide-Mitsuoka/terraform-gcp-template`, governed by the
-[ADR-0004](0004-harden-multi-level-template-inheritance.md) manifest contract. The parentage
+[ADR-0004](../foundation/adr/0004-harden-multi-level-template-inheritance.md) manifest contract. The parentage
 is declared now via `.github/inheritance/manifest.json` + `lock.json` (pinned to
 `terraform-gcp-template` commit `e2b42fc`), and MUST validate with
 `python3 scripts/template_inheritance.py validate --root .`.

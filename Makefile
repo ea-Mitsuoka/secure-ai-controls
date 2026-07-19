@@ -1,86 +1,74 @@
-# Canonical command interface (CLAUDE.md §11) — Terraform/GCP wiring, adapted from
-# profiles/terraform-gcp (contract semantics: profiles/README.md).
-# Every agent, hook, and CI job calls ONLY these targets. Optional FILE=<path>
-# narrows format/lint to one file.
-#
-# terraform/ does not exist until Phase② (docs/phase2-prep.md §3); every terraform
-# target degrades to a notice instead of failing so hooks and CI stay green.
+# Canonical command interface (CLAUDE.md §11) wired for this template's layout:
+# root configs under infra/envs/<env>/ that reference modules from
+# github.com/Yukihide-Mitsuoka/terraform-gcp-modules pinned by tag (?ref=vX.Y.Z).
+# The heavier layered-foundations reference stays available in profiles/terraform-gcp/.
 
 .PHONY: setup format lint test test-unit test-integration coverage build run \
-        security-scan sbom clean help doctor
+        security-scan sbom clean help doctor plan
 
 FILE ?=
-TF_DIR := terraform
-
-# Guard for recipes that need terraform code. Single shell line — usable inline.
-TF_GUARD = if [ ! -d $(TF_DIR) ]; then echo "no $(TF_DIR)/ yet — IaC starts in Phase② (docs/phase2-prep.md)"; exit 0; fi
+ENV ?= dev
 
 help: ## List available targets
 	@grep -E '^[a-z-]+:.*##' $(MAKEFILE_LIST) | awk -F':.*## ' '{printf "  make %-18s %s\n", $$1, $$2}'
 
-setup: ## Install toolchain and git hooks (idempotent)
-	@command -v terraform >/dev/null 2>&1 || echo "terraform not installed — required from Phase②"
-	@if command -v tflint >/dev/null 2>&1 && [ -f .tflint.hcl ]; then tflint --init --config "$(CURDIR)/.tflint.hcl"; fi
-	@if command -v pre-commit >/dev/null 2>&1; then pre-commit install --hook-type pre-commit --hook-type pre-push; else echo "pre-commit not installed — local gates inactive (CI still enforces)"; fi
+setup: ## Install git hooks (terraform/tflint/gitleaks come from your machine setup)
+	@if command -v pre-commit >/dev/null 2>&1; then pre-commit install --hook-type pre-commit --hook-type pre-push; else echo "pre-commit not installed — local hooks skipped (CI runs the same gates)"; fi
 
 format: ## Auto-format terraform (all, or FILE=<path>)
 ifneq ($(FILE),)
-	@case "$(FILE)" in \
-		*.tf|*.tfvars) terraform fmt "$(FILE)" ;; \
-		*) : ;; \
-	esac
+	@case "$(FILE)" in *.tf|*.tfvars) terraform fmt "$(FILE)" ;; *) : ;; esac
 else
-	@$(TF_GUARD); cd $(TF_DIR) && terraform fmt -recursive
+	terraform fmt -recursive infra
 endif
 
-lint: ## Check-only, zero warnings (COD-001). Fixing is `make format`'s job.
-	@$(TF_GUARD); \
-	cd $(TF_DIR) && terraform fmt -recursive -check; cd ..; \
-	if command -v tflint >/dev/null 2>&1 && [ -f .tflint.hcl ]; then tflint --recursive --config "$(CURDIR)/.tflint.hcl" --chdir $(TF_DIR); fi; \
-	if command -v shellcheck >/dev/null 2>&1; then find $(TF_DIR) scripts -name "*.sh" -exec shellcheck -s bash {} + 2>/dev/null || true; fi
+lint: ## Check-only, zero warnings (COD-001); never fixes
+	terraform fmt -check -recursive infra
+	@if command -v tflint >/dev/null 2>&1; then tflint --recursive --chdir infra; else echo "tflint not installed — CI still enforces it"; fi
 
-test: test-unit test-integration ## Full suite — TST-001
+test: test-unit test-integration ## Full suite
 
-test-unit: ## Fast suite, used by pre-commit — TST-001
-	@$(TF_GUARD); $(MAKE) build
+test-unit: ## Fast gate: Terraform formatting and workflow contract tests
+	terraform fmt -check -recursive infra
+	python3 -m unittest discover -s tests/inheritance -p 'test_*.py'
+	python3 -m unittest discover -s tests/governance -p 'test_*.py'
+	python3 -m unittest discover -s tests/workflows -p 'test_*.py'
 
-test-integration: ## terraform test for every config that has *.tftest.hcl
-	@$(TF_GUARD); set -e; \
-	for dir in $$(find $(TF_DIR) -name '*.tftest.hcl' -not -path '*/.terraform/*' -exec dirname {} \; | sort -u); do \
+test-integration: ## terraform test for every dir that has *.tftest.hcl
+	@set -e; for dir in $$(find infra -name '*.tftest.hcl' -exec dirname {} \; | sort -u); do \
 		echo "Testing $$dir..."; \
-		(cd "$$dir" && rm -rf .terraform .terraform.lock.hcl && terraform init -backend=false >/dev/null && terraform test); \
-	done
+		(cd "$$dir" && terraform init -backend=false -input=false >/dev/null && terraform test); \
+	done; true
 
-coverage: ## Coverage ratchet (TST-003) — terraform has no line coverage; runs the suite
-	@$(MAKE) test
+coverage: ## Not applicable to pure IaC; kept honest with a note (no fake metric)
+	@echo "coverage: no application code in this IaC starter; nothing to measure"
 
-build: ## IaC "build" = credential-free validate of every terraform config
-	@$(TF_GUARD); set -e; \
-	for dir in $$(find $(TF_DIR) -name '*.tf' -not -path '*/.terraform/*' -exec dirname {} \; | sort -u); do \
+build: ## Credential-free validate of every env
+	@set -e; for dir in infra/envs/*/; do \
 		echo "Validating $$dir..."; \
-		(cd "$$dir" && terraform init -backend=false >/dev/null && terraform validate); \
+		(cd "$$dir" && terraform init -backend=false -input=false >/dev/null && terraform validate); \
 	done
 
-run: ## For IaC, "run" shows the execution plan (wired in Phase② via tf-plan/WIF)
-	@$(TF_GUARD); echo "plan wiring lands in Phase② (gcp-cicd-workflows tf-plan) — docs/phase2-prep.md §3"
+run: plan ## For IaC, "run" shows the plan
 
-security-scan: ## Local security sweep (secrets + IaC misconfig)
+plan: ## Plan the selected env (ENV=dev by default; needs credentials + backend)
+	cd infra/envs/$(ENV) && terraform init -input=false && terraform plan
+
+security-scan: ## Local sweep: secrets + IaC misconfig
 	@if command -v gitleaks >/dev/null 2>&1; then gitleaks detect --no-banner; else echo "gitleaks not installed — CI still enforces SEC-002"; fi
-	@if [ -d $(TF_DIR) ] && command -v trivy >/dev/null 2>&1; then trivy config --exit-code 1 $(TF_DIR); \
-	elif command -v trivy >/dev/null 2>&1; then trivy fs --scanners vuln,misconfig,secret --exit-code 1 .; \
-	else echo "trivy not installed — CI still enforces SEC-030"; fi
+	@if command -v trivy >/dev/null 2>&1; then trivy config --exit-code 1 infra; else echo "trivy not installed — CI still enforces SEC-030"; fi
 
-sbom: ## Generate SBOM (SPDX + CycloneDX) into ./dist — REL-020
+sbom: ## SBOM (SPDX + CycloneDX) into dist/ — REL-020
 	@mkdir -p dist
 	@if command -v syft >/dev/null 2>&1; then syft . -o spdx-json=dist/sbom.spdx.json -o cyclonedx-json=dist/sbom.cdx.json && echo "SBOM written to dist/"; else echo "syft not installed — release workflow generates the authoritative SBOM"; fi
 
 clean: ## Remove caches/artifacts inside the workspace only (GR-031)
-	@if [ -d $(TF_DIR) ]; then \
-		find $(TF_DIR) -type d -name ".terraform" -exec rm -rf {} +; \
-		find $(TF_DIR) -type f -name ".terraform.lock.hcl" -exec rm -f {} +; \
-	fi
-	@rm -rf dist
+	find infra -type d -name ".terraform" -exec rm -rf {} + 2>/dev/null || true
+	rm -rf dist
 
-doctor: ## Self-check the template: metadata invariants + guard-hook tests (foundation-level, stack-independent)
+doctor: ## Foundation self-check: metadata invariants + guard-hook tests
 	@bash scripts/template-check.sh
+	@python3 -m unittest discover -s tests/inheritance -p 'test_*.py'
+	@python3 -m unittest discover -s tests/governance -p 'test_*.py'
+	@python3 -m unittest discover -s tests/workflows -p 'test_*.py'
 	@bash .claude/hooks/tests/guard-bash.test.sh
