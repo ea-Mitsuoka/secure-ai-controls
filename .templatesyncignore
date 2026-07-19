@@ -15,5 +15,5 @@ Makefile
 .github/dependabot.yml
 .templatesyncignore
 docs/**
-!docs/foundation/
-!docs/foundation/**
+:!docs/foundation/
+:!docs/foundation/**
