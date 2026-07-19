@@ -1,32 +1,23 @@
 ---
-id: adr-index
-title: Architecture Decision Records
+id: secure-ai-controls-adr-index
+title: secure-ai-controls アーキテクチャ判断記録
 ---
 
-# Architecture Decision Records (ADR)
+# secure-ai-controls アーキテクチャ判断記録
 
-Immutable records of decisions with long-term consequences. Required by GR-022 for any
-architectural change (definition: ARC-020 "Architectural" scope). Process:
-`.skills/architecture.skill.md`.
+このディレクトリには、このリポジトリ固有のADRだけを配置する。基盤全体の判断は
+[`../foundation/adr/`](../foundation/adr/) を参照する。
 
-## Rules
+## 規則
 
-- Numbered sequentially: `NNNN-kebab-case-title.md`. Copy [0000-template.md](0000-template.md).
-- Status flow: `proposed → accepted | rejected`; later `deprecated` or
-  `superseded by ADR-NNNN`. **Accepted ADRs are never edited** — supersede them.
-- One decision per ADR. Keep it under ~2 pages.
-- The ADR PR is approved by a human before implementation starts (GR-022).
-- Every ADR gets a line in [.ai/decision-log.md](../../.ai/decision-log.md).
+- 新規ADRは `NNNN-kebab-case-title.md` の連番で作成する。
+- 雛形は [`../foundation/templates/adr.md`](../foundation/templates/adr.md) をコピーする。
+- 状態は `proposed → accepted | rejected` とし、accepted のADRは編集せず新しいADRで置き換える。
+- すべてのADRを [`.ai/decision-log.md`](../../.ai/decision-log.md) に記録する。
 
-## Index
+## 一覧
 
-| # | Title | Status | Date |
-|---|-------|--------|------|
-| [0001](0001-record-architecture-decisions.md) | Record architecture decisions | accepted | 2026-07-02 |
-| [0002](0002-ai-facing-docs-in-english.md) | AI-facing docs are written in English | accepted | 2026-07-02 |
-| [0003](0003-reconcile-github-governance-from-inherited-policy.md) | Reconcile GitHub governance from inherited policy | accepted | 2026-07-15 |
-| [0004](0004-harden-multi-level-template-inheritance.md) | Harden multi-level template inheritance | accepted | 2026-07-16 |
-| [0005](0005-adopt-terraform-gcp-template-parent.md) | Adopt terraform-gcp-template as the direct parent template | accepted | 2026-07-16 |
+| # | 判断 | 状態 | 日付 |
+|---|------|------|------|
+| [0005](0005-adopt-terraform-gcp-template-parent.md) | `terraform-gcp-template` を直接親として採用する | accepted | 2026-07-16 |
 | [0006](0006-inherit-foundation-documentation-namespace.md) | 基盤文書名前空間だけを直接親から継承する | accepted | 2026-07-19 |
-
-<!-- Append new ADRs to this table (newest last). -->
