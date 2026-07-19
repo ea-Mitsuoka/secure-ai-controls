@@ -1,19 +1,24 @@
 # Files the template-sync workflow must NEVER overwrite in downstream repos —
 # everything a project customizes. Rules/workflows/skills DO sync (that's the point).
 src/**
-tests/**
-docs/**
-profiles/**
 CLAUDE.md
 README.md
-Makefile
 .env.example
+.gitignore
+.ai/architecture.md
 .ai/mission.md
 .ai/decision-log.md
 .github/CODEOWNERS
 .github/governance/repository.json
 .github/dependabot.yml
+.github/inheritance/lock.json
+.github/inheritance/manifest.json
+.github/workflows/template-sync.yml
 .templatesyncignore
+secure-ai-controls.md
+
+# Foundation-owned documentation is the only inherited docs namespace. This action
+# passes entries to Git pathspec processing, so exclusions use :! instead of !.
 docs/**
 :!docs/foundation/
 :!docs/foundation/**
