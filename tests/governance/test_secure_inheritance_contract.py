@@ -72,7 +72,7 @@ class SecureInheritanceContractTest(unittest.TestCase):
     def test_template_sync_uses_node24_checkout(self):
         workflow = TEMPLATE_SYNC_WORKFLOW.read_text(encoding="utf-8")
 
-        self.assertIn("actions/checkout@v6", workflow)
+        self.assertRegex(workflow, r"actions/checkout@[0-9a-f]{40} # v6")
         self.assertNotIn("actions/checkout@v4", workflow)
 
     def test_template_sync_records_exact_action_source_commit(self):
