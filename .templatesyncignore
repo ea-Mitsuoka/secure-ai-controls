@@ -8,6 +8,10 @@ README.md
 .ai/architecture.md
 .ai/mission.md
 .ai/decision-log.md
+.claude/hooks/guard-bash.sh
+.claude/hooks/tests/**
+.claude/settings.json
+.devcontainer/**
 .github/CODEOWNERS
 .github/governance/repository.json
 .github/dependabot.yml
@@ -16,6 +20,8 @@ README.md
 .github/workflows/template-sync.yml
 .templatesyncignore
 secure-ai-controls.md
+tests/governance/test_secure_inheritance_contract.py
+tests/governance/test_terraform_profile.py
 
 # Foundation-owned documentation is the only inherited docs namespace. This action
 # passes entries to Git pathspec processing, so exclusions use :! instead of !.
