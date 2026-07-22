@@ -13,6 +13,7 @@ README.md
 .claude/settings.json
 .devcontainer/**
 .github/CODEOWNERS
+.github/ISSUE_TEMPLATE/config.yml
 .github/governance/repository.json
 .github/dependabot.yml
 .github/inheritance/lock.json
