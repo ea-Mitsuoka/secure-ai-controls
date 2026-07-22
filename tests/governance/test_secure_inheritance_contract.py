@@ -59,7 +59,7 @@ class SecureInheritanceContractTest(unittest.TestCase):
             ".github/inheritance/lock.json",
             ".github/inheritance/manifest.json",
             ".github/ISSUE_TEMPLATE/config.yml",
-            ".github/workflows/template-sync.yml",
+            ".github/workflows/**",
             "secure-ai-controls.md",
             "tests/governance/test_secure_inheritance_contract.py",
             "tests/governance/test_terraform_profile.py",

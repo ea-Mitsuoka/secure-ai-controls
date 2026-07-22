@@ -1,5 +1,5 @@
-# Files the template-sync workflow must NEVER overwrite in downstream repos —
-# everything a project customizes. Rules/workflows/skills DO sync (that's the point).
+# Files the transitional Template Sync action must never overwrite. Executable workflows
+# are target-owned and arrive only through separate reviewed PRs (ADR-0007).
 src/**
 CLAUDE.md
 README.md
@@ -18,7 +18,7 @@ README.md
 .github/dependabot.yml
 .github/inheritance/lock.json
 .github/inheritance/manifest.json
-.github/workflows/template-sync.yml
+.github/workflows/**
 .templatesyncignore
 secure-ai-controls.md
 tests/governance/test_secure_inheritance_contract.py
