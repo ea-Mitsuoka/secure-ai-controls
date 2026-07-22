@@ -2,7 +2,7 @@
 id: phase2-prep
 title: 達成過程② 基盤試作 — 準備タスクと実施順
 status: ready
-updated: 2026-07-22
+updated: 2026-07-23
 ---
 
 # 達成過程② 基盤試作（2026-09〜10）— 準備タスクと実施順
@@ -48,11 +48,13 @@ ai-dev-foundation テンプレートは適用済み（Initial commit）。イン
 2. **完了（2026-07-22）**: `terraform-gcp-template` から `infra/envs` 前提の Makefile と
    `infra/envs/dev` 雛形を取り込み、暫定的な `terraform/` 前提の配線を置き換えた。
 3. **完了（2026-07-16）**: `make setup`（pre-commit フックの導入）。
-4. **決定（2026-07-16・ユーザー承認）**: ブランチ保護は**保護なしで運用**する —
-   private 個人リポではブランチ保護 API が GitHub Pro を要求するため（403確認）。
-   GR-010 フックと PR 規律で代替し、本番化・外販の段階で再検討する。
-   merge 方式は **squash のみ**に設定済み（`squash_merge_commit_title=PR_TITLE` —
-   Conventional Commits による SemVer 自動化が機能する）。
+4. **更新（2026-07-23）**: 正式な `ea-Mitsuoka/secure-ai-controls` は **public**
+   リポジトリで、`ai-dev-foundation: branch-governance` Ruleset が `active` である。
+   したがって、2026-07-16 時点の「private 個人リポジトリのため保護なし」という判断は
+   現在の運用状態には適用しない。merge 方式は **squash のみ**とし、
+   `squash_merge_commit_title=PR_TITLE` により Conventional Commits と SemVer 自動化を
+   維持する。現在の共同作業者権限では管理設定の全項目を監査できないため、Ruleset の存在を
+   超える管理設定の断定は、所有者権限での監査結果が得られるまで行わない。
 5. **決定（2026-07-16・ADR-0005）**: テンプレート親を **terraform-gcp-template** に変更
    （多段継承）。`.github/inheritance/manifest.json` + `lock.json` で宣言・検証済み。
    Terraform レイヤの実ファイル反映はレビュー済みPRで完了。継承lockの最終更新は、全継承対象の
