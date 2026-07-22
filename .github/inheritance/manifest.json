@@ -52,7 +52,6 @@
     "profiles/",
     "renovate.json",
     "scripts/",
-    "tests/governance/",
     "tests/workflows/"
   ],
   "protected_paths": [
@@ -77,6 +76,7 @@
     "docs/phase2-prep.md",
     "docs/requirements.md",
     "docs/requirements/",
-    "secure-ai-controls.md"
+    "secure-ai-controls.md",
+    "tests/governance/test_terraform_profile.py"
   ]
 }
