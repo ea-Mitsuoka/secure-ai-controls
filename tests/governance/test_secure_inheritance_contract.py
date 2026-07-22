@@ -75,6 +75,21 @@ class SecureInheritanceContractTest(unittest.TestCase):
         self.assertIn("actions/checkout@v6", workflow)
         self.assertNotIn("actions/checkout@v4", workflow)
 
+    def test_template_sync_records_exact_action_source_commit(self):
+        workflow = TEMPLATE_SYNC_WORKFLOW.read_text(encoding="utf-8")
+
+        self.assertIn("id: template-sync", workflow)
+        self.assertIn("steps.template-sync.outputs.pr_branch", workflow)
+        self.assertIn(
+            'SOURCE_REPOSITORY: "Yukihide-Mitsuoka/terraform-gcp-template"',
+            workflow,
+        )
+        self.assertIn(
+            'gh api "repos/${SOURCE_REPOSITORY}/commits/${SOURCE_SHORT}"',
+            workflow,
+        )
+        self.assertIn("gh pr edit", workflow)
+
 
 if __name__ == "__main__":
     unittest.main()
