@@ -6,6 +6,9 @@ from pathlib import Path
 REPOSITORY_ROOT = Path(__file__).parents[2]
 MANIFEST_FILE = REPOSITORY_ROOT / ".github" / "inheritance" / "manifest.json"
 IGNORE_FILE = REPOSITORY_ROOT / ".templatesyncignore"
+TEMPLATE_SYNC_WORKFLOW = (
+    REPOSITORY_ROOT / ".github" / "workflows" / "template-sync.yml"
+)
 
 
 class SecureInheritanceContractTest(unittest.TestCase):
@@ -55,6 +58,7 @@ class SecureInheritanceContractTest(unittest.TestCase):
             ".devcontainer/**",
             ".github/inheritance/lock.json",
             ".github/inheritance/manifest.json",
+            ".github/ISSUE_TEMPLATE/config.yml",
             ".github/workflows/template-sync.yml",
             "secure-ai-controls.md",
             "tests/governance/test_secure_inheritance_contract.py",
@@ -64,6 +68,12 @@ class SecureInheritanceContractTest(unittest.TestCase):
 
         self.assertLessEqual(required_exclusions, entries)
         self.assertTrue(inherited_transport_paths.isdisjoint(entries))
+
+    def test_template_sync_uses_node24_checkout(self):
+        workflow = TEMPLATE_SYNC_WORKFLOW.read_text(encoding="utf-8")
+
+        self.assertIn("actions/checkout@v6", workflow)
+        self.assertNotIn("actions/checkout@v4", workflow)
 
 
 if __name__ == "__main__":
