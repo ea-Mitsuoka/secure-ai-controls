@@ -1,6 +1,7 @@
 ---
 id: docs-index
 title: Documentation Index
+updated: 2026-07-22
 ---
 
 # docs/ — Documentation Index
@@ -21,8 +22,8 @@ in `.ai/`; decisions in `docs/adr/`. Writing rules: `.ai/documentation.md`.
 | [templates/](templates/) | Reusable document templates (requirements, ...) | start a standard document |
 | [roadmap.md](roadmap.md) | Direction and planned milestones | prioritize work |
 | [glossary.md](glossary.md) | Ubiquitous language dictionary | name things correctly |
-| [usage.md](usage.md) | Using the template on a new machine/account; new-project setup (日本語: [usage.ja.md](usage.ja.md)) | onboard a new environment |
-| [ai-instruction-files.ja.md](ai-instruction-files.ja.md) | 日本語: AIへ指示を出す全ファイルの目的・利用シーン・利用例 | understand the AI-instruction file set |
+| [foundation/guides/usage.ja.md](foundation/guides/usage.ja.md) | 基盤の利用・セットアップ手順 | onboard a new environment |
+| [foundation/guides/ai-instruction-files.ja.md](foundation/guides/ai-instruction-files.ja.md) | AI指示ファイルの目的・利用場面・例 | understand the AI-instruction file set |
 
 Contribution guide: [/CONTRIBUTING.md](../CONTRIBUTING.md).
 
