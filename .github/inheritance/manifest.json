@@ -52,6 +52,7 @@
     "profiles/",
     "renovate.json",
     "scripts/",
+    "tests/governance/test_network_module_pin.py",
     "tests/workflows/"
   ],
   "protected_paths": [

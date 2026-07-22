@@ -2,7 +2,7 @@
 # Bump ?ref= deliberately when upgrading (never track a branch).
 
 module "network" {
-  source     = "git::https://github.com/Yukihide-Mitsuoka/terraform-gcp-modules.git//modules/network?ref=v0.1.0"
+  source     = "git::https://github.com/Yukihide-Mitsuoka/terraform-gcp-modules.git//modules/network?ref=v0.5.0"
   project_id = var.project_id
   name       = "core"
 

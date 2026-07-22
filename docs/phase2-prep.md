@@ -2,7 +2,7 @@
 id: phase2-prep
 title: 達成過程② 基盤試作 — 準備タスクと実施順
 status: ready
-updated: 2026-07-16
+updated: 2026-07-22
 ---
 
 # 達成過程② 基盤試作（2026-09〜10）— 準備タスクと実施順
@@ -45,9 +45,8 @@ ai-dev-foundation テンプレートは適用済み（Initial commit）。イン
 
 1. **完了（2026-07-16）**: プレースホルダ置換（mission.md・CLAUDE.md §1・architecture.md
    スタック表・README・CODEOWNERS・issue config）。
-2. **完了（2026-07-16）**: Makefile を profiles/terraform-gcp を基に実装（暫定）。`terraform/`
-   が無い間は各ターゲットが通知を出して green になる。**②で terraform-gcp-template から
-   継承する `infra/envs` 前提の Makefile に置き換える**（下記 6）。
+2. **完了（2026-07-22）**: `terraform-gcp-template` から `infra/envs` 前提の Makefile と
+   `infra/envs/dev` 雛形を取り込み、暫定的な `terraform/` 前提の配線を置き換えた。
 3. **完了（2026-07-16）**: `make setup`（pre-commit フックの導入）。
 4. **決定（2026-07-16・ユーザー承認）**: ブランチ保護は**保護なしで運用**する —
    private 個人リポではブランチ保護 API が GitHub Pro を要求するため（403確認）。
@@ -56,20 +55,23 @@ ai-dev-foundation テンプレートは適用済み（Initial commit）。イン
    Conventional Commits による SemVer 自動化が機能する）。
 5. **決定（2026-07-16・ADR-0005）**: テンプレート親を **terraform-gcp-template** に変更
    （多段継承）。`.github/inheritance/manifest.json` + `lock.json` で宣言・検証済み。
-   materialization（実ファイル反映）はコミットベース継承ツールの follow-up 待ち。
+   Terraform レイヤの実ファイル反映はレビュー済みPRで完了。継承lockの最終更新は、全継承対象の
+   収束確認後に実施する。
 
-### 2.1 ②で materialize する terraform レイヤ（親から継承）
+### 2.1 Terraform レイヤのmaterialize — 2026-07-22 実施済み
 
-コミットベース継承の materialization が使えるようになったら（または Phase② が先に始まる場合は
-1回だけ手動コピーで）、親 terraform-gcp-template から次を取り込む。取り込み後は
-`python3 scripts/template_inheritance.py plan` の差分をレビューしてから反映する。
+親 `terraform-gcp-template` との差分をレビューし、次を取り込んだ。今後の更新は
+`python3 scripts/template_inheritance.py plan` の差分を確認してから反映する。
 
-- `infra/envs/<env>/`（Terraform ルート構成の雛形）— 暫定 Makefile を置き換える前提
-- 親の Terraform 配線 Makefile（`infra/` 前提・`plan ENV=<env>`）
-- `.github/governance/profiles/terraform-gcp.json`（`iac-scan` を必須チェック化）
-- `tests/governance/` `tests/workflows/`（プロファイル/ワークフロー契約テスト）
-- **要調整**: 親の `iac.yml` はジョブ名が `iac-scan`、現行 `iac.yml` は `scan`。プロファイルの
-  required check 名と一致させる（materialize 時に親側が最新化されていれば自動解消）。
+- `infra/envs/<env>/`（Terraform ルート構成の雛形）
+- 親のTerraform配線Makefile（`infra/` 前提・`plan ENV=<env>`）
+- `.github/governance/profiles/terraform-gcp.json`（required check名は `iac-scan`）
+- 親から継承するワークフロー契約テストとnetwork module pinテスト
+- 利用先固有のプロファイル所有区分を検証するgovernance test
+
+`iac.yml` のjob名とプロファイルのrequired check名は、どちらも `iac-scan` に統一済み。
+network moduleはVPC Flow Logsを有効化した `v0.5.0` に固定し、Trivy `GCP-0076` の再発を
+pinテストと `iac-scan` で検出する。
 
 ## 3. 構築の実施順（依存とロックアウト回避を考慮）
 
