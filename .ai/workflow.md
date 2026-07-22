@@ -45,18 +45,6 @@ Refs: #<issue>
 - One logical change per commit; the diff must match the message.
 - Commits MUST NOT mix `refactor` with behavior types (COD-021).
 
-## WF-021: AI-authorship trailers (`Co-Authored-By`)
-
-Whether commits carry an AI co-author trailer (e.g.
-`Co-Authored-By: Claude <noreply@anthropic.com>`) is a **per-repository decision**,
-because GitHub renders the trailer and thereby discloses AI involvement in history and PRs.
-- This template's default: **include it** — transparency about how the code was produced.
-- Client / engagement repos where disclosure conflicts with the contract MUST turn it off,
-  record the decision in `.ai/decision-log.md`, and enforce it. The reliable mechanism is a
-  local `commit-msg` git hook that strips the trailer — instructing the agent alone is not
-  auditable. Never use this to hide authorship where disclosure is required.
-- Whichever way a repo sets it, apply it consistently; do not toggle per commit.
-
 ## WF-030: Pull request rules
 
 - Size: within GR-020 limits.

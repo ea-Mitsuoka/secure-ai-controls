@@ -1,7 +1,7 @@
 ---
 name: release
 description: Prepare and verify a release; humans approve, agents prepare
-triggers: [release, ship, publish version, prepare release, リリース, リリース準備]
+triggers: [release, ship, publish version, prepare release]
 reads: [.ai/release.md, .ai/security.md]
 ---
 

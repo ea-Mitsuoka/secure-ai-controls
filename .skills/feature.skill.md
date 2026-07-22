@@ -1,7 +1,7 @@
 ---
 name: feature
 description: Implement new functionality end-to-end (requirements → design → code → tests → docs → PR)
-triggers: [new feature, add functionality, implement issue, 機能追加, 新機能, 機能開発]
+triggers: [new feature, add functionality, implement issue]
 reads: [.ai/workflow.md, .ai/architecture.md, .ai/coding-rules.md, .ai/testing.md]
 ---
 

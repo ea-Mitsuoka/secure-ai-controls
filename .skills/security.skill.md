@@ -1,7 +1,7 @@
 ---
 name: security
 description: Security hardening, vulnerability response, and security review of changes
-triggers: [vulnerability, CVE, security review, hardening, auth change, pentest finding, セキュリティ, 脆弱性, セキュリティレビュー]
+triggers: [vulnerability, CVE, security review, hardening, auth change, pentest finding]
 reads: [.ai/security.md, .ai/guardrails.md, SECURITY.md]
 ---
 

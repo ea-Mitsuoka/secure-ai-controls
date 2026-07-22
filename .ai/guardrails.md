@@ -30,14 +30,8 @@ Example keys in docs MUST be obviously fake (`sk-EXAMPLE-000000`).
 - **Instead**: same as GR-001.
 
 ### GR-003: Never log or echo secret values
-MUST NOT print secrets to stdout, logs, error messages, or test output. This includes
-reading a credential file to the terminal (`cat .env`, `head server.key`,
-`cat ~/.ssh/id_rsa`) or dumping the whole environment (`printenv`, bare `env`).
-- **Detection**: `.claude/settings.json` deny-list blocks the Read tool for `.env*`,
-  `*.pem/*.key/*.p12/*.pfx`, `secrets/`, `~/.ssh`, `~/.config/gcloud`, `~/.gemini`;
-  `.claude/hooks/guard-bash.sh` blocks the equivalent Bash reads and env dumps (LOG-0010).
-- **Instead**: log the variable *name* and redact the value (`API_KEY=***`); read a
-  single variable by name (`printenv PATH`) when you genuinely need one.
+MUST NOT print secrets to stdout, logs, error messages, or test output.
+- **Instead**: log the variable *name* and redact the value (`API_KEY=***`).
 
 ## Git & branches
 
@@ -50,10 +44,6 @@ even for "trivial" fixes.
 ### GR-011: Never force-push or rewrite history on shared branches
 MUST NOT use `git push --force`, `git rebase` on pushed shared branches, or delete
 others' branches. `--force-with-lease` on your *own* PR branch is permitted.
-Moving a floating release tag (e.g. `v1` onto the latest `v1.x.y`) rewrites no branch
-history and is permitted, but only in the explicit form
-`git push --force <remote> refs/tags/<tag>` — tag refspecs only, one push per command;
-bare tag names stay blocked because they are ambiguous with branch names (LOG-0009).
 
 ### GR-012: Never bypass hooks or checks
 MUST NOT use `git commit --no-verify`, `git push --no-verify`, `[skip ci]`, or disable
