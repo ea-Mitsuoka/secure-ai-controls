@@ -1,7 +1,7 @@
 ---
 name: test
 description: Add or improve tests — coverage gaps, characterization, flaky-test repair
-triggers: [write tests, improve coverage, flaky test, characterization tests, テスト作成, テスト追加, カバレッジ]
+triggers: [write tests, improve coverage, flaky test, characterization tests]
 reads: [.ai/testing.md, .ai/coding-rules.md]
 ---
 

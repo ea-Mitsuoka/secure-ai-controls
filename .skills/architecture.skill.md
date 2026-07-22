@@ -1,7 +1,7 @@
 ---
 name: architecture
 description: Design or change structure, boundaries, or technology — always through an ADR
-triggers: [new module, change boundaries, replace technology, redesign, public API shape, 設計変更, アーキテクチャ, ADR作成, モジュール追加]
+triggers: [new module, change boundaries, replace technology, redesign, public API shape]
 reads: [.ai/architecture.md, .ai/decision-log.md, docs/adr/]
 ---
 
@@ -14,8 +14,8 @@ human, then implemented incrementally.
 ## Inputs
 - The forcing problem: what concrete pain or requirement makes the current structure
   insufficient? (No forcing problem → no architecture change; COD-051.)
-- Current state: read `.ai/architecture.md`, affected `MODULE.md` files, prior ADRs in
-  `docs/adr/` (someone may have decided this before — superseding requires saying so).
+- Current state: read `.ai/architecture.md`, affected `MODULE.md` files, foundation ADRs in
+  `docs/foundation/adr/` and repository ADRs in `docs/adr/` (someone may have decided this before — superseding requires saying so).
 
 ## Process
 1. Write the problem statement and constraints (performance, cost, team, compliance).
@@ -23,7 +23,7 @@ human, then implemented incrementally.
    critical unknown blocks comparison (timebox it).
 3. Compare options against: simplicity, blast radius (ARC-020), reversibility,
    operational cost, security posture (GR-030), vendor lock-in.
-4. Draft the ADR from `docs/adr/0000-template.md`: context, decision, consequences
+4. Draft the ADR from `docs/foundation/templates/adr.md`: context, decision, consequences
    (including negative ones — an ADR without downsides is not credible).
 5. Open the ADR as its own PR (or the first commit of the change PR). **Human approval
    of the ADR is the gate** (GR-022) — do not implement past it.

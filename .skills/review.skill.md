@@ -1,7 +1,7 @@
 ---
 name: review
 description: Review a PR (or self-review a diff) against the 10-viewpoint checklist
-triggers: [review PR, self-review, code review, レビュー, コードレビュー, PRレビュー, セルフレビュー]
+triggers: [review PR, self-review, code review]
 reads: [.ai/review-checklist.md, .ai/guardrails.md]
 ---
 

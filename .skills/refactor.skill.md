@@ -1,7 +1,7 @@
 ---
 name: refactor
 description: Restructure code without changing behavior, protected by tests at every step
-triggers: [refactor, restructure, clean up, reduce debt, extract module, リファクタ, リファクタリング, クリーンアップ, 構造改善]
+triggers: [refactor, restructure, clean up, reduce debt, extract module]
 reads: [.ai/architecture.md, .ai/coding-rules.md, .ai/testing.md]
 ---
 

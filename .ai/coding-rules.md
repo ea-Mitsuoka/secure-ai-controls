@@ -20,9 +20,6 @@ the tools already decide. Suppressions require justification (GR-041).
 - Names state intent, not implementation (`retryDelay`, not `sleepTime2`).
 - One concept = one name across the codebase; check `docs/glossary.md` before inventing
   a term, and add new terms there (ubiquitous language, DDD).
-- The glossary's *Avoid* column lists banned synonyms per term. Those words MUST NOT be
-  used for that concept — in identifiers, docs, or discussion. A synonym is how a second
-  name for the same concept starts.
 - Boolean names read as predicates (`isExpired`, `hasAccess`).
 
 ### COD-003: Function size and shape

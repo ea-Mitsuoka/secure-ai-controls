@@ -30,8 +30,6 @@ Used for: reviewing PRs, and mandatory **self-review** before opening a PR (WF-0
 - [ ] Change scope classified correctly; ADR present if architectural (GR-022)
 - [ ] MODULE.md updated when the contract changed (ARC-003)
 - [ ] No new abstraction without a current second consumer (COD-051)
-- [ ] New/changed interfaces are deep (ARC-005): small surface, complexity hidden,
-      passes the deletion test; no pass-through layers
 
 ### REV-MNT: Maintainability
 - [ ] Code matches surrounding idioms (COD-050); naming per COD-002 and glossary
