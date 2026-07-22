@@ -15,8 +15,9 @@
     ".ai/security.md",
     ".ai/testing.md",
     ".ai/workflow.md",
-    ".claude/",
-    ".devcontainer/",
+    ".claude/agents/",
+    ".claude/hooks/post-edit-quality.sh",
+    ".claude/skills/",
     ".editorconfig",
     ".gitattributes",
     ".mdformat.toml",
@@ -59,6 +60,10 @@
     ".ai/architecture.md",
     ".ai/decision-log.md",
     ".ai/mission.md",
+    ".claude/hooks/guard-bash.sh",
+    ".claude/hooks/tests/",
+    ".claude/settings.json",
+    ".devcontainer/",
     ".env.example",
     ".github/CODEOWNERS",
     ".github/dependabot.yml",
@@ -78,6 +83,7 @@
     "docs/requirements.md",
     "docs/requirements/",
     "secure-ai-controls.md",
+    "tests/governance/test_secure_inheritance_contract.py",
     "tests/governance/test_terraform_profile.py"
   ]
 }

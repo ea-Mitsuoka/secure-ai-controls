@@ -1,30 +1,33 @@
 ---
-id: docs-index
-title: Documentation Index
+id: secure-ai-controls-docs-index
+title: secure-ai-controls ドキュメント索引
+updated: 2026-07-22
 ---
 
-# docs/ — Documentation Index
+# secure-ai-controls ドキュメント索引
 
-Descriptive documentation (authority level 5 — see `.ai/README.md`). Binding rules live
-in `.ai/`; decisions in `docs/adr/`. Writing rules: `.ai/documentation.md`.
+このディレクトリは、基盤から継承する文書と、このリポジトリ固有の日本語文書の
+配置を案内する。
 
-| Directory | Content | Primary reader task |
-|-----------|---------|---------------------|
-| [adr/](adr/) | Architecture Decision Records (**normative** when accepted) | "why is it built this way?" |
-| [architecture/](architecture/) | System structure, C4 diagrams, data flows | understand before changing structure |
-| [domain/](domain/) | Domain model, bounded contexts, ubiquitous language | understand the business rules |
-| [api/](api/) | API contracts (OpenAPI/schema + commentary) | integrate with or change an API |
-| [deployment/](deployment/) | Environments, deploy procedure, configuration | ship it |
-| [operations/](operations/) | Monitoring, alerts, SLOs, maintenance | keep it running |
-| [runbook/](runbook/) | Step-by-step incident/ops procedures | 3am emergency |
-| [troubleshooting/](troubleshooting/) | Known failure modes → diagnosis → fix | "it's broken, what now?" |
-| [templates/](templates/) | Reusable document templates (requirements, ...) | start a standard document |
-| [roadmap.md](roadmap.md) | Direction and planned milestones | prioritize work |
-| [glossary.md](glossary.md) | Ubiquitous language dictionary | name things correctly |
-| [usage.md](usage.md) | Using the template on a new machine/account; new-project setup (日本語: [usage.ja.md](usage.ja.md)) | onboard a new environment |
-| [ai-instruction-files.ja.md](ai-instruction-files.ja.md) | 日本語: AIへ指示を出す全ファイルの目的・利用シーン・利用例 | understand the AI-instruction file set |
+## 配置規則
 
-Contribution guide: [/CONTRIBUTING.md](../CONTRIBUTING.md).
+| 所有者 | 配置先 | 言語 | 更新方法 |
+|--------|--------|------|----------|
+| 基盤リポジトリ | [`foundation/`](foundation/) | 基盤の規約に従う | 直接編集せず、親テンプレートから同期する |
+| secure-ai-controls | `docs/` 直下の用途別パス | 原則として日本語 | このリポジトリのPRで更新する |
 
-Each directory's README defines its own structure and **update triggers** — the doc-update
-matrix (DOC-030) tells you which directory a given change must touch.
+詳細な配置判断は、基盤の
+[`project-documentation.md`](foundation/guides/project-documentation.md) を参照する。
+
+## プロジェクト固有文書
+
+| 文書 | 用途 |
+|------|------|
+| [`requirements.md`](requirements.md) | プロジェクト全体の要件定義 |
+| [`requirements/`](requirements/) | 要件の根拠資料と個別要件 |
+| [`phase2-prep.md`](phase2-prep.md) | 基盤試作フェーズの準備と実施順 |
+| [`adr/`](adr/) | このリポジトリ固有のアーキテクチャ判断記録 |
+| [`glossary.md`](glossary.md) | プロジェクト固有用語の参照先 |
+
+新しいプロジェクト固有文書は、必要になった時点で用途別パスへ作成する。雛形は
+[`foundation/templates/`](foundation/templates/) からコピーし、内容を日本語で記述する。
